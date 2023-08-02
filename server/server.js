@@ -38,6 +38,14 @@ app.post('/orders', express.json(), (req, res) => {
     });
 });
 
+app.get('/orderslist', (req, res) => {
+  const sql = "SELECT * FROM orders";
+  db.query(sql, (err, data) => {
+      if(err) return res.json(err);
+      return res.json(data);
+  })
+})
+
 app.listen(8081, () => {
   console.log("listening")
 });

@@ -6,6 +6,7 @@ function menuOrder() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPizzas, setSelectedPizzas] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [orderPlaced, setOrderPlaced] = useState(false)
 
   const openModal = () => {
     setModalOpen(true);
@@ -13,6 +14,7 @@ function menuOrder() {
 
   const closeModal = () => {
     setModalOpen(false);
+    setOrderPlaced(false)
   };
 
   const addToCart = (pizza) => {
@@ -42,8 +44,9 @@ function menuOrder() {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setSelectedPizzas([])
+        setSelectedPizzas([]);
         setTotalPrice(0);
+        setOrderPlaced(true);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -173,7 +176,7 @@ function menuOrder() {
             <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Bestel!</button>
           </div>
           <div className='mt-5'>
-            {orderPlacing && <p>Bestelling geplaatst!</p>}
+            {orderPlaced && <p>ewa</p>}
           </div>
         </div>
        </div>
