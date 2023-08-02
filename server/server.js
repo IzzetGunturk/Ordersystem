@@ -10,7 +10,8 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: '',
-    database: 'pizzaordersystem'
+    database: 'pizzaordersystem',
+    charset: 'utf8mb4'
 });
 
 db.connect((err) => {

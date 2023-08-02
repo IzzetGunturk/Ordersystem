@@ -26,25 +26,28 @@ function menuOrder() {
     setTotalPrice(totalPrice - parseFloat(pizzaToRemove.price.replace('€', '')));
   };
 
-  const placeOrder = async () => {
-
-    try {
-      const response = await fetch('http://localhost:8081/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ pizzaOrder, customerName, tableNumber })
+  const orderPlacing = () => {
+    // Verzend de bestelling naar de backend via een POST-verzoek
+    fetch('http://localhost:8081/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pizzaName: selectedPizzas.map(pizza => pizza.name).join(', '),
+        pizzaPrice: '€' + totalPrice.toFixed(2),
+        tableNumber: 4,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setSelectedPizzas([])
+        setTotalPrice(0);
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
-      const data = await response.json();
-      console.log(data.message);
-      setOrderPlaced(true);
-      setPizzaOrder('');
-      setCustomerName('');
-      setAddress('');
-    } catch (error) {
-      console.error('Er is een fout opgetreden bij het plaatsen van de bestelling:', error);
-    }
   };
 
   const pizzaData = [
@@ -167,7 +170,10 @@ function menuOrder() {
             <p>4</p>
           </div>
           <div className='mt-7'>
-            <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md'>Bestel!</button>
+            <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Bestel!</button>
+          </div>
+          <div className='mt-5'>
+            {orderPlacing && <p>Bestelling geplaatst!</p>}
           </div>
         </div>
        </div>
