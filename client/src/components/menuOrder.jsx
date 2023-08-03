@@ -8,28 +8,32 @@ function menuOrder() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [orderPlaced, setOrderPlaced] = useState(false)
 
+  // open modal button
   const openModal = () => {
     setModalOpen(true);
   };
 
+  // close modal button
   const closeModal = () => {
     setModalOpen(false);
     setOrderPlaced(false)
   };
 
+  // add to cart button
   const addToCart = (pizza) => {
     setSelectedPizzas([...selectedPizzas, pizza]);
     setTotalPrice(totalPrice + parseFloat(pizza.price.replace('€', '').replace(',', '.')));
   };
 
-  const deleteToCart = (pizzaToRemove) => {
+  // delete from cart button
+  const deleteFromCart = (pizzaToRemove) => {
     const updatedPizzas = selectedPizzas.filter((pizza) => pizza !== pizzaToRemove);
     setSelectedPizzas(updatedPizzas);
     setTotalPrice(totalPrice - parseFloat(pizzaToRemove.price.replace('€', '')));
   };
 
+  // order placing button
   const orderPlacing = () => {
-    // Verzend de bestelling naar de backend via een POST-verzoek
     fetch('http://localhost:8081/orders', {
       method: 'POST',
       headers: {
@@ -132,7 +136,7 @@ function menuOrder() {
 
       <div className='sticky bottom-0 flex pb-10'>
         <button className="mt-3 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md mx-auto" onClick={() => openModal()}>
-          Bekijk bestelling €{totalPrice.toFixed(2)}
+          Check orders €{totalPrice.toFixed(2)}
         </button>
       </div>
     </section>
@@ -151,14 +155,14 @@ function menuOrder() {
        
         <div className='mb-4'>
           <div>
-            <h2 className="text-xl text-primary font-semibold">Bestellingen:</h2>
+            <h2 className="text-xl text-primary font-semibold">Orders:</h2>
             <ul>
               {selectedPizzas.map((pizza, index) => 
               <li className='flex flex-col' key={index}>
                 <div className='flex flex-row'>
                   <p className=''>{pizza.name}</p> 
                   <p className='ml-4'>{pizza.price}</p>
-                  <button className='text-red-500 ml-4' onClick={() => deleteToCart(pizza)}>Delete</button>
+                  <button className='text-red-500 ml-4' onClick={() => deleteFromCart(pizza)}>Delete</button>
                 </div>
               </li>
               )}
@@ -176,7 +180,7 @@ function menuOrder() {
             <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Bestel!</button>
           </div>
           <div className='mt-5'>
-            {orderPlaced && <p>ewa</p>}
+            {orderPlaced && <p>Order placed!</p>}
           </div>
         </div>
        </div>
