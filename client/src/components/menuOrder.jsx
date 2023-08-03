@@ -32,7 +32,7 @@ function menuOrder() {
     setTotalPrice(totalPrice - parseFloat(pizzaToRemove.price.replace('€', '')));
   };
 
-  // order placing button
+  // order placing button fetch api
   const orderPlacing = () => {
     fetch('http://localhost:8081/orders', {
       method: 'POST',

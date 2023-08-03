@@ -1,8 +1,52 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 function OrdersListPizzeria() {
+
+  const [dataOrderList, setDataOrderList] = useState([])
+
+  // fetch api orderslist
+  useEffect(()=>{
+    fetch('http://localhost:8081/orderlist').then(res => res.json()).then(data => {
+      setDataOrderList(data);
+      console.log(data)
+    }).catch(e=>console.log(e.message));
+  },[])
+
+  // order done (delete) button
+  const orderDone = () => {
+    
+  }
+
   return (
-    <div>O</div>
+    <div className="flex flex-col">
+    <div className="overflow-x-auto">
+      <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+        <div className="overflow-hidden">
+          <table className="min-w-full text-left text-sm">
+            <thead
+              className="border-b bg-white font-medium">
+              <tr>
+                <th scope="col" className="border px-6 py-4">Pizza</th>
+                <th scope="col" className="border px-6 py-4">Price</th>
+                <th scope="col" className="border px-6 py-4">Table number</th>
+                <th scope="col" className="border px-6 py-4"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {dataOrderList.map((data, index) => 
+              <tr key={index}>
+                <td className="border px-6 py-4">{data.pizzaName}</td>
+                <td className="border px-6 py-4">{data.pizzaPrice}</td>
+                <td className="border px-6 py-4">{data.tableNumber}</td>
+                <td className="border px-6 py-4"><button>Done</button></td>
+              </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   )
 }
 
