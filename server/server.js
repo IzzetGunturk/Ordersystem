@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
     return res.json("From backend side");
 });
 
+// add orders
 app.post('/orders', express.json(), (req, res) => {
     const { pizzaName, pizzaPrice, tableNumber} = req.body;
     const order = { pizzaName, pizzaPrice, tableNumber };
@@ -38,6 +39,7 @@ app.post('/orders', express.json(), (req, res) => {
     });
 });
 
+// show orders
 app.get('/orderlist', (req, res) => {
   const sql = "SELECT * FROM orders";
   db.query(sql, (err, data) => {
@@ -45,6 +47,26 @@ app.get('/orderlist', (req, res) => {
       return res.json(data);
   })
 })
+
+// delete orders
+app.delete('/orderlist/:id', (req, res) => {
+  const orderId = req.params.id;
+  const sql = 'DELETE FROM orders WHERE id = ?';
+  db.query(sql, orderId, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    
+    // After deletion, fetch the updated order list and send it as the response
+    const sqlUpdated = 'SELECT * FROM orders';
+    db.query(sqlUpdated, (err, updatedData) => {
+      if (err) {
+        throw err;
+      }
+      res.json(updatedData);
+    });
+  });
+});
 
 app.listen(8081, () => {
   console.log("listening")

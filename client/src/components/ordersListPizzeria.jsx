@@ -5,17 +5,28 @@ function OrdersListPizzeria() {
   const [dataOrderList, setDataOrderList] = useState([])
 
   // fetch api orderslist
-  useEffect(()=>{
-    fetch('http://localhost:8081/orderlist').then(res => res.json()).then(data => {
-      setDataOrderList(data);
-      console.log(data)
-    }).catch(e=>console.log(e.message));
-  },[])
+  useEffect(() => {
+    fetch('http://localhost:8081/orderlist')
+      .then((res) => res.json())
+      .then((data) => {
+        setDataOrderList(data);
+        console.log(data);
+      })
+      .catch((e) => console.log(e.message));
+  }, []);
 
   // order done (delete) button
-  const orderDone = () => {
-    
-  }
+  const orderDone = (orderId) => {
+    // DELETE request
+    fetch(`http://localhost:8081/orderlist/${orderId}`, {
+      method: 'DELETE',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setDataOrderList(data);
+      })
+      .catch((e) => console.log(e.message));
+  };
 
   return (
     <div className="flex flex-col">
@@ -33,14 +44,16 @@ function OrdersListPizzeria() {
               </tr>
             </thead>
             <tbody>
-              {dataOrderList.map((data, index) => 
-              <tr key={index}>
-                <td className="border px-6 py-4">{data.pizzaName}</td>
-                <td className="border px-6 py-4">{data.pizzaPrice}</td>
-                <td className="border px-6 py-4">{data.tableNumber}</td>
-                <td className="border px-6 py-4"><button>Done</button></td>
+            {dataOrderList.map((order) => (
+              <tr key={order.id}>
+                <td className="border px-6 py-4">{order.pizzaName}</td>
+                <td className="border px-6 py-4">{order.pizzaPrice}</td>
+                <td className="border px-6 py-4">{order.tableNumber}</td>
+                <td className="border px-6 py-4">
+                  <button onClick={() => orderDone(order.id)}>Done</button>
+                </td>
               </tr>
-              )}
+            ))}
             </tbody>
           </table>
         </div>
