@@ -5,10 +5,12 @@ function LoginPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [wrongPasswordAlert, setWrongPasswordAlert] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   
 
   const handleLogin = async () => {
+    event.preventDefault();
     try {
       const response = await fetch('http://localhost:8081/login', {
         method: 'POST',
@@ -24,7 +26,7 @@ function LoginPage() {
         localStorage.setItem('token', token); 
         setLoggedIn(true);
       } else {
-        // wrong password
+        setWrongPasswordAlert('Wrong credentials, try it again!')
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -35,33 +37,53 @@ function LoginPage() {
     localStorage.removeItem('token'); // Remove the token from localStorage
     setUsername('');
     setPassword('');
+    setWrongPasswordAlert('');
     setLoggedIn(false);
   };
     
 
   if (!loggedIn) {
     return (
-      <div>
-        <h2>Login</h2>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <button onClick={handleLogin}>Login</button>
-      </div>
+      <section>
+        <div className="mx-auto max-w-screen-xl px-4 py-28 sm:px-6 lg:px-8">
+          <div className="mx-auto">
+            <h1 className="text-center text-2xl font-bold text-primary sm:text-3xl">
+              Login to database
+            </h1>
+
+            <form className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-xl sm:p-6 lg:p-8 mx-auto max-w-lg">
+              <div>
+                <div className="flex flex-col">
+                  <input 
+                  type='text'
+                  value={username}
+                  placeholder='Username' 
+                  className='mx-auto p-2 m-5 w-48 border border-gray-300 rounded-md'
+                  onChange={(e) => setUsername(e.target.value)}>
+                  </input>
+                  <input 
+                  type='password'
+                  value={password} 
+                  placeholder='Password' 
+                  className='mx-auto p-2 w-48 border border-gray-300 rounded-md'
+                  onChange={(e) => setPassword(e.target.value)}>
+                  </input>
+                  <button 
+                  className='mx-auto px-4 py-2 m-5 w-20 bg-blue-500 text-white rounded-md cursor-pointer'
+                  onClick={handleLogin}>
+                    Login
+                  </button>
+                  <p className='mx-auto text-red-600'>{wrongPasswordAlert}</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     );
   } else {
     return (
       <div>
-        <h2>Welcome, {username}!</h2>
         <button onClick={handleLogout}>Logout</button>
         <OrderListPizzeria/>
       </div>
