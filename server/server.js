@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -65,6 +66,32 @@ app.delete('/orderlist/:id', (req, res) => {
       }
       res.json(updatedData);
     });
+  });
+});
+
+// login
+app.post('/login', express.json(), (req, res) => {
+  const { username, password } = req.body;
+
+  // Fetch the user from the database based on the provided username
+  const sql = 'SELECT * FROM login WHERE username = ?';
+  db.query(sql, [username], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error fetching user from database.' });
+    }
+
+    if (result.length === 0) {
+      return res.status(401).json({ error: 'Invalid username or password.' });
+    }
+
+    // Compare the provided password with the password from the database
+    const user = result[0];
+    if (user.password === password) {
+      // Passwords match, grant access to the user
+      return res.json({ message: 'Login successful!' });
+    } else {
+      return res.status(401).json({ error: 'Invalid username or password.' });
+    }
   });
 });
 

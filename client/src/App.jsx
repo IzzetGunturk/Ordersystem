@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as BrowserRouter, Routes, Route } from 'react-router-dom';
 import MenuOrder from './components/menuOrder';
-import OrdersListPizzeria from './components/ordersListPizzeria'
+import LoginPage from './components/loginPage';
 
 const App = () => {
   return (
     <>
       <Routes>
       <Route path="/" element={<MenuOrder />} />
-      <Route path="/orderlist" element={<OrdersListPizzeria />} />
+      <Route path="/orderlist" element={<LoginPage />} />
       </Routes>
     </>
   );
