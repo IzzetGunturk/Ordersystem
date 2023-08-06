@@ -16,6 +16,6 @@ Back-end
 - Node.js
 - Express.js
 - SQL
-- WebSockets (not already implemented)
+- WebSockets
 
 

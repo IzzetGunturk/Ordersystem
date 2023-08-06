@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const WebSocket = require('ws');
 const bcrypt = require('bcrypt');
 
 const app = express();
@@ -26,6 +27,36 @@ app.get('/', (req, res) => {
     return res.json("From backend side");
 });
 
+
+// set up WebSocket server
+const server = app.listen(8082, () => {
+  console.log('WebSocket server is listening on port 8082');
+});
+const wss = new WebSocket.Server({ server });
+
+// function to send updates to all connected clients
+function sendUpdatesToClients(updatedData) {
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(updatedData));
+    }
+  });
+}
+
+// WebSocket connection handling
+wss.on('connection', (ws) => {
+  console.log('A client connected.');
+
+  ws.on('message', (message) => {
+    console.log('Received message from client:', message);
+  });
+
+  ws.on('close', () => {
+    console.log('A client disconnected.');
+  });
+});
+
+
 // add orders
 app.post('/orders', express.json(), (req, res) => {
     const { pizzaName, pizzaPrice, tableNumber} = req.body;
@@ -37,8 +68,19 @@ app.post('/orders', express.json(), (req, res) => {
         throw err;
       }
       res.json({ message: 'Order placed successfully!' });
+
+      // after inserting the order, fetch the updated list from the database
+      const sqlUpdated = 'SELECT * FROM orders';
+      db.query(sqlUpdated, (err, updatedData) => {
+        if (err) {
+          throw err;
+        }
+        // send updates to all connected clients after inserting an order
+        sendUpdatesToClients(updatedData);
+      });
     });
 });
+
 
 // show orders
 app.get('/orderlist', (req, res) => {
@@ -46,8 +88,9 @@ app.get('/orderlist', (req, res) => {
   db.query(sql, (err, data) => {
       if(err) return res.json(err);
       return res.json(data);
-  })
-})
+  });
+});
+
 
 // delete orders
 app.delete('/orderlist/:id', (req, res) => {
@@ -58,22 +101,26 @@ app.delete('/orderlist/:id', (req, res) => {
       throw err;
     }
     
-    // After deletion, fetch the updated order list and send it as the response
+    // after deletion, fetch the updated order list and send it as the response
     const sqlUpdated = 'SELECT * FROM orders';
     db.query(sqlUpdated, (err, updatedData) => {
       if (err) {
         throw err;
       }
       res.json(updatedData);
+
+      // send updates to all connected clients after deleting an order
+      sendUpdatesToClients(updatedData);
     });
   });
 });
+
 
 // login
 app.post('/login', express.json(), (req, res) => {
   const { username, password } = req.body;
 
-  // Fetch the user from the database based on the provided username
+  // fetch the user from the database based on the provided username
   const sql = 'SELECT * FROM login WHERE username = ?';
   db.query(sql, [username], (err, result) => {
     if (err) {
@@ -84,10 +131,9 @@ app.post('/login', express.json(), (req, res) => {
       return res.status(401).json({ error: 'Invalid username or password.' });
     }
 
-    // Compare the provided password with the password from the database
+    // compare the provided password with the password from the database
     const user = result[0];
     if (user.password === password) {
-      // Passwords match, grant access to the user
       return res.json({ message: 'Login successful!' });
     } else {
       return res.status(401).json({ error: 'Invalid username or password.' });
