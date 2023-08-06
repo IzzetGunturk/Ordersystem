@@ -6,7 +6,8 @@ function menuOrder() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPizzas, setSelectedPizzas] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [orderPlaced, setOrderPlaced] = useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // open modal button
   const openModal = () => {
@@ -34,6 +35,10 @@ function menuOrder() {
 
   // order placing button fetch api
   const orderPlacing = () => {
+    if (selectedPizzas == 0) {
+      setErrorMessage('Cart is empty.');
+    }
+    else {
     fetch('http://localhost:8081/orders', {
       method: 'POST',
       headers: {
@@ -51,10 +56,12 @@ function menuOrder() {
         setSelectedPizzas([]);
         setTotalPrice(0);
         setOrderPlaced(true);
+        setErrorMessage('');
       })
       .catch(error => {
         console.error('Error:', error);
       });
+    }
   };
 
   const pizzaData = [
@@ -179,8 +186,9 @@ function menuOrder() {
           <div className='mt-7'>
             <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Bestel!</button>
           </div>
-          <div className='mt-5'>
+          <div className='mt-5 text-red-600'>
             {orderPlaced && <p>Order placed!</p>}
+            {errorMessage}
           </div>
         </div>
        </div>
