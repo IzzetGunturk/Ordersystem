@@ -2,7 +2,9 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const WebSocket = require('ws');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 
 const app = express();
 
@@ -117,6 +119,12 @@ app.delete('/orderlist/:id', (req, res) => {
 
 
 // login
+const generateSecretKey = () => {
+  return crypto.randomBytes(64).toString('hex');
+};
+
+const secretKey = generateSecretKey();
+
 app.post('/login', express.json(), (req, res) => {
   const { username, password } = req.body;
 
@@ -134,7 +142,11 @@ app.post('/login', express.json(), (req, res) => {
     // compare the provided password with the password from the database
     const user = result[0];
     if (user.password === password) {
-      return res.json({ message: 'Login successful!' });
+      // Create a JWT token
+      const token = jwt.sign({ username: user.username }, secretKey, {
+        expiresIn: '1h', // Token expires in 1 hour
+      });
+      return res.json({ message: 'Login successful!', token });
     } else {
       return res.status(401).json({ error: 'Invalid username or password.' });
     }

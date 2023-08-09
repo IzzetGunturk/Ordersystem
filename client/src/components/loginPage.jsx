@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import OrderListPizzeria from './ordersListPizzeria';
 
 function LoginPage() {
@@ -7,6 +7,13 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [wrongPasswordAlert, setWrongPasswordAlert] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
   
   // login button
   const handleLogin = async () => {
