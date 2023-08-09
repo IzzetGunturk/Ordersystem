@@ -3,12 +3,12 @@ import React from 'react'
 function header() {
     
   return (
-    <header className="bg-blue-500 py-4">
+    <header className="bg-yellow-500 py-4">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="text-white text-xl font-bold">
-            <a href='/'>Company name</a>
+            <a href='/'>🍕 Pizza Italiano</a>
           </div>
 
           {/* Navigation Menu */}

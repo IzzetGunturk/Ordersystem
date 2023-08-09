@@ -8,9 +8,11 @@ function LoginPage() {
   const [wrongPasswordAlert, setWrongPasswordAlert] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   
-
+  // login button
   const handleLogin = async () => {
+    // form
     event.preventDefault();
+    
     try {
       const response = await fetch('http://localhost:8081/login', {
         method: 'POST',
@@ -33,6 +35,7 @@ function LoginPage() {
     }
   };
 
+  // logout button
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove the token from localStorage
     setUsername('');
@@ -41,17 +44,16 @@ function LoginPage() {
     setLoggedIn(false);
   };
     
-
+  // if not logged in
   if (!loggedIn) {
     return (
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-28 sm:px-6 lg:px-8">
           <div className="mx-auto">
-            <h1 className="text-center text-2xl font-bold text-primary sm:text-3xl">
-              Login to database
-            </h1>
-
-            <form className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-xl sm:p-6 lg:p-8 mx-auto max-w-lg">
+            <form className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-xl sm:p-6 lg:p-8 mx-auto max-w-lg bg-white">
+              <h1 className="text-center text-2xl font-bold text-primary sm:text-3xl">
+                Login to database
+              </h1>
               <div>
                 <div className="flex flex-col">
                   <input 
@@ -69,7 +71,7 @@ function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}>
                   </input>
                   <button 
-                  className='mx-auto px-4 py-2 m-5 w-20 bg-blue-500 text-white rounded-md cursor-pointer'
+                  className='mx-auto px-4 py-2 m-5 w-20 bg-yellow-500 hover:bg-yellow-300 transition duration-200 text-white rounded-md cursor-pointer'
                   onClick={handleLogin}>
                     Login
                   </button>
@@ -84,7 +86,9 @@ function LoginPage() {
   } else {
     return (
       <div>
-        <button onClick={handleLogout}>Logout</button>
+        <div className='flex'>
+          <button className='mx-auto m-5 px-4 py-2 bg-red-500 hover:bg-red-400 transition duration-200 text-white rounded-md' onClick={handleLogout}>Logout</button>
+        </div>
         <OrderListPizzeria/>
       </div>
     );

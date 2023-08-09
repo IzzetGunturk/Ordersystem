@@ -118,10 +118,14 @@ function menuOrder() {
   return (
     <>
     <section className="px-5">
-      <div className="mt-20 mb-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-[75rem] mx-auto">
+      <div className='flex flex-col'>
+        <h1 className='mx-auto mt-16 p-3 text-4xl text-gray-700 font-semibold border-y-2 border-solid border-gray-700'>MENU</h1>
+        <p className='mx-auto mt-4 text-lg text-gray-700'>Pizza Italiano wish you bon appetit!</p>
+      </div>
+      <div className="pt-16 mb-4 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-[75rem] mx-auto">
         {pizzaData.map((pizza, index) => (
           <div key={index}>
-            <div className="max-w-md flex flex-col justify-between h-full rounded overflow-hidden shadow-lg mx-auto">
+            <div className="max-w-md flex flex-col justify-between h-full rounded overflow-hidden shadow-lg mx-auto bg-white">
               <img className="w-full h-44 object-cover" src={pizza.image} alt="Pizzaimage" />
               <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{pizza.name}</div>
@@ -130,7 +134,7 @@ function menuOrder() {
               <div className="px-6 pt-2 pb-2">
                 <div className="font-bold text-xl">{pizza.price}</div>
                 <button
-                  className='mt-7 mb-5 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 transition duration-200 text-white rounded-md'
+                  className='mt-7 mb-5 px-4 py-2 bg-yellow-500 hover:bg-yellow-300 transition duration-200 text-white rounded-md'
                   onClick={() => addToCart(pizza)}
                 >
                   Add to cart
@@ -142,7 +146,7 @@ function menuOrder() {
       </div>
 
       <div className='sticky bottom-0 flex pb-10'>
-        <button className="mt-3 px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md mx-auto" onClick={() => openModal()}>
+        <button className="mt-3 px-4 py-2 bg-green-500 hover:bg-green-400 transition duration-200 text-white rounded-md mx-auto" onClick={() => openModal()}>
           Check orders €{totalPrice.toFixed(2)}
         </button>
       </div>
@@ -151,10 +155,10 @@ function menuOrder() {
     {modalOpen && (
       <div className="fixed inset-0 flex items-center justify-center z-50 px-5">
       <div className="bg-black bg-opacity-50 absolute inset-0"></div>
-      <div className="bg-white rounded-lg max-w-[75rem] w-96 p-5 z-10 overflow-y-scroll max-h-96">
+      <div className="bg-white rounded-lg max-w-[75rem] w-[30rem] p-5 z-10 overflow-y-scroll max-h-96">
         <div className='flex justify-end sticky top-0'>
           <button
-            className="bg-black text-white py-2 px-4 rounded-md transition duration-200 "
+            className="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded-md transition duration-200 "
             aria-label='Close' onClick={closeModal}>
             Close
           </button>
@@ -174,21 +178,24 @@ function menuOrder() {
               </li>
               )}
             </ul>
+            <hr></hr>
+          </div>
+          <div className='mt-5'>
+            <h2 className="text-xl text-primary font-semibold">Table:</h2>
+            <p>4</p>
+            <hr></hr>
           </div>
           <div>
             <h2 className="pt-5 text-xl text-primary font-semibold">Total price:</h2>
             <p>€{totalPrice.toFixed(2)}</p>
-          </div>
-          <div className='mt-6'>
-            <h2 className="text-xl text-primary font-semibold">Table:</h2>
-            <p>4</p>
+            <hr></hr>
           </div>
           <div className='mt-7'>
-            <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Bestel!</button>
+            <button className='px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded-md' onClick={orderPlacing}>Order!</button>
           </div>
-          <div className='mt-5 text-red-600'>
+          <div className='mt-5'>
             {orderPlaced && <p>Order placed!</p>}
-            {errorMessage}
+            <p className='text-red-600'>{errorMessage}</p>
           </div>
         </div>
        </div>
