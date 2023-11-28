@@ -15,7 +15,7 @@ Front-end:
 Back-end
 - Node.js
 - Express.js
-- SQL
+- MySQL
 - WebSockets
 
 
