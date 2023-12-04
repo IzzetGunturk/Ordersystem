@@ -113,6 +113,12 @@ function menuOrder() {
       pizzainformation: 'Tomato sauce, mozzarella cheese, ham, mushrooms, artichokes, olives, oregano, and olive oil.',
       price: '€15,00'
     },
+    {
+      image: Pizza,
+      name: 'Pizza Tonno',
+      pizzainformation: 'Tomato sauce, mozzarella cheese, tuna, red onions, black olives, oregano, and olive oil.',
+      price: '€15,00'
+    },
   ];
 
   return (
