@@ -12,7 +12,7 @@ Front-end:
 - Javascript
 - Tailwind CSS
 
-Back-end
+Back-end:
 - Node.js
 - Express.js
 - MySQL
