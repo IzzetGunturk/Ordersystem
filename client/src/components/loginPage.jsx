@@ -93,8 +93,8 @@ function LoginPage() {
   } else {
     return (
       <div>
-        <div className='flex'>
-          <button className='mx-auto m-5 px-4 py-2 bg-red-500 hover:bg-red-400 transition duration-200 text-white rounded-md' onClick={handleLogout}>Logout</button>
+        <div className='flex justify-end px-8 py-5'>
+          <button className='px-4 py-2 bg-red-500 hover:bg-red-400 transition duration-200 text-white rounded-md' onClick={handleLogout}>Logout</button>
         </div>
         <OrderListPizzeria/>
       </div>
