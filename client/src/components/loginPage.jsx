@@ -57,28 +57,28 @@ function LoginPage() {
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-28 sm:px-6 lg:px-8">
           <div className="mx-auto">
-            <form className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-xl sm:p-6 lg:p-8 mx-auto max-w-lg bg-white">
-              <h1 className="text-center text-2xl font-bold text-primary sm:text-3xl">
-                Login to database
+            <form className="mt-6 mb-0 space-y-4 rounded-lg p-4 shadow-xl sm:p-6 lg:p-8 mx-auto max-w-lg bg-buttoncolor">
+              <h1 className="text-center font-Parisienne text-primary text-4xl">
+                Login
               </h1>
               <div>
-                <div className="flex flex-col">
+                <div className="flex flex-col px-7">
                   <input 
                   type='text'
                   value={username}
                   placeholder='Username' 
-                  className='mx-auto p-2 m-5 w-48 border border-gray-300 rounded-md'
+                  className='mx-auto p-2 m-5 w-full border border-gray-300 rounded-md'
                   onChange={(e) => setUsername(e.target.value)}>
                   </input>
                   <input 
                   type='password'
                   value={password} 
                   placeholder='Password' 
-                  className='mx-auto p-2 w-48 border border-gray-300 rounded-md'
+                  className='mx-auto p-2 w-full border border-gray-300 rounded-md'
                   onChange={(e) => setPassword(e.target.value)}>
                   </input>
                   <button 
-                  className='mx-auto px-4 py-2 m-5 w-20 bg-yellow-500 hover:bg-yellow-300 transition duration-200 text-white rounded-md cursor-pointer'
+                  className='mx-auto px-4 py-2 m-5 w-20 bg-primary hover:bg-[#afac9b] font-semibold transition duration-200 text-black rounded-md cursor-pointer'
                   onClick={handleLogin}>
                     Login
                   </button>
