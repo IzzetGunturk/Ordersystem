@@ -61,8 +61,8 @@ wss.on('connection', (ws) => {
 
 // add orders
 app.post('/orders', express.json(), (req, res) => {
-    const { pizzaName, pizzaPrice, tableNumber} = req.body;
-    const order = { pizzaName, pizzaPrice, tableNumber };
+    const { itemsName, itemsPrice, tableNumber} = req.body;
+    const order = { itemsName, itemsPrice, tableNumber };
   
     const sql = 'INSERT INTO orders SET ?';
     db.query(sql, order, (err, result) => {

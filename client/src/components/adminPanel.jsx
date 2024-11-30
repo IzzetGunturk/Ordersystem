@@ -55,7 +55,7 @@ function OrdersListPizzeria({}) {
             <table className="min-w-full text-left text-sm bg-white">
               <thead className="border-b font-medium">
                 <tr>
-                  <th scope="col" className="border px-6 py-4">Pizza</th>
+                  <th scope="col" className="border px-6 py-4">Items</th>
                   <th scope="col" className="border px-6 py-4">Price</th>
                   <th scope="col" className="border px-6 py-4">Table number</th>
                   <th scope="col" className="border px-6 py-4"></th>
@@ -64,8 +64,16 @@ function OrdersListPizzeria({}) {
               <tbody>
                 {dataOrderList.map((order) => (
                   <tr key={order.id}>
-                    <td className="border px-6 py-4">{order.pizzaName}</td>
-                    <td className="border px-6 py-4">{order.pizzaPrice}</td>
+                    <td className="border px-6 py-4">
+                      <div className='flex flex-col gap-3'>
+                        {order.itemsName.split(', ').map((pizza, index) => (
+                          <p key={index}>
+                            {pizza.trim()}  
+                          </p>
+                        ))}
+                      </div>
+                    </td>
+                    <td className="border px-6 py-4">{order.itemsPrice}</td>
                     <td className="border px-6 py-4">{order.tableNumber}</td>
                     <td className="border px-6 py-4">
                       <button className='bg-green-500 hover:bg-green-400 transition duration-200 text-white px-4 py-2 rounded-md' onClick={() => orderDone(order.id)}>Done</button>

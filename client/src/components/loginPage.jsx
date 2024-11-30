@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import OrderListPizzeria from './ordersListPizzeria';
+import AdminPanel from './adminPanel';
 
 function LoginPage() {
 
@@ -96,7 +96,7 @@ function LoginPage() {
         <div className='flex justify-end px-8 py-5'>
           <button className='px-4 py-2 bg-red-500 hover:bg-red-400 transition duration-200 text-white rounded-md' onClick={handleLogout}>Logout</button>
         </div>
-        <OrderListPizzeria/>
+        <AdminPanel/>
       </div>
     );
   }

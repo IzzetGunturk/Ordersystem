@@ -45,15 +45,15 @@ function menuOrder() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        pizzaName: selectedItems.map(pizza => pizza.name).join(', '),
-        pizzaPrice: '€' + totalPrice.toFixed(2),
+        itemsName: selectedItems.map(pizza => pizza.name).join(', '),
+        itemsPrice: '€' + totalPrice.toFixed(2),
         tableNumber: 4,
       }),
     })
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setSelectedPizzas([]);
+        setSelectedItems([]);
         setTotalPrice(0);
         setOrderPlaced(true);
         setErrorMessage('');
