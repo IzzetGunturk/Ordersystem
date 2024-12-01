@@ -66,9 +66,21 @@ function OrdersListPizzeria({}) {
                   <tr key={order.id}>
                     <td className="border px-6 py-4">
                       <div className='flex flex-col gap-3'>
-                        {order.itemsName.split(', ').map((pizza, index) => (
+                        {Object.entries(
+                          order.itemsName.split(', ').reduce((acc, item) => {
+                            const trimmedItem = item.trim();
+                            
+                            if (acc[trimmedItem]) {
+                              acc[trimmedItem] += 1;
+                            }
+                            else {
+                              acc[trimmedItem] = 1
+                            }
+                            return acc;
+                          }, {})
+                        ).map(([item, count], index) => (
                           <p key={index}>
-                            {pizza.trim()}  
+                            {count}x {item}
                           </p>
                         ))}
                       </div>

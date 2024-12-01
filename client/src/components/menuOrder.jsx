@@ -64,7 +64,7 @@ function menuOrder() {
     }
   };
 
-  const pizzaData = [
+  const itemsData = [
     {
       image: Pizza,
       name: 'Pizza Margharita',
@@ -153,17 +153,17 @@ function menuOrder() {
         <div className='flex flex-col'>
           <h1 className='mx-auto p-3 text-5xl font-Parisienne'>Pizza's</h1>
         </div>
-          {pizzaData.map((pizza, index) => (
+          {itemsData.map((item, index) => (
             <div key={index} className="flex md:flex-row flex-col items-center gap-4 border-b border-[#B7B7B7] pb-4">
-              <img className="w-20 h-20 object-cover rounded-xl" src={pizza.image} alt="Pizzaimage" />
+              <img className="w-20 h-20 object-cover rounded-xl" src={item.image} alt="Pizzaimage" />
 
               <div className='flex md:flex-row flex-col gap-9 items-center w-full'>
                 <div className='flex flex-col flex-grow justify-between md:items-start items-center'>
-                  <h2 className='font-semibold text-[24px] font-Poppins'>{pizza.name}</h2>
-                  <p className='font-Poppins md:text-left text-center'>{pizza.pizzainformation}</p>
+                  <h2 className='font-semibold text-[24px] font-Poppins'>{item.name}</h2>
+                  <p className='font-Poppins md:text-left text-center'>{item.pizzainformation}</p>
                 </div>
-                <p className='font-poppins font-semibold text-[24px]'>{pizza.price}</p>
-                <button onClick={() => (addToCart(pizza))} 
+                <p className='font-poppins font-semibold text-[24px]'>{item.price}</p>
+                <button onClick={() => (addToCart(item))} 
                   className='mx-auto flex flex-row gap-2 px-[10px] py-[10px] m-5 bg-buttoncolor hover:bg-[#3d3d3d] transition duration-200 text-primary font-semibold rounded-md cursor-pointer'>
                     Order 
                     <svg className='fill-primary' xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
