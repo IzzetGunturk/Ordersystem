@@ -149,7 +149,7 @@ function menuOrder() {
         <h1 className='mx-auto p-3 text-5xl font-Parisienne'>Menu</h1>
         <p className='mx-auto text-lg font-Poppins'>Bon appetit!</p>
       </div>
-      <div className="mt-16 mb-4 mx-auto flex flex-col gap-8">
+      <div className="mt-16 mb-4 mx-auto flex flex-col gap-8 max-w-[1800px]">
         <div className='flex flex-col'>
           <h1 className='mx-auto p-3 text-5xl font-Parisienne'>Pizza's</h1>
         </div>
@@ -174,7 +174,7 @@ function menuOrder() {
             </div>
           ))}
       </div>
-      <div className="mt-16 mb-4 mx-auto flex flex-col gap-8">
+      <div className="mt-16 mb-4 mx-auto flex flex-col gap-8 max-w-[1800px]">
         <div className='flex flex-col'>
           <h1 className='mx-auto p-3 text-5xl font-Parisienne'>Drinks</h1>
         </div>
